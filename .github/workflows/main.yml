@@ -54,6 +54,10 @@ jobs:
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
+      - name: Echo outputs
+        run: |-
+          echo ${{steps.auth.outputs}}
+
       - name: Echo access_token
         run: |-
           echo ${{steps.auth.outputs.access_token}}
