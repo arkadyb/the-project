@@ -64,8 +64,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: us-central1-docker.pkg.dev
-          username: _json_key
-          password: ${{ secrets.GCP_CREDENTIALS }}
+          username: _json_key_base64
+          password: ${{ secrets.GKE_SA_KEY }}
 
       # - name: Docker configuration
       #   run: |-
@@ -76,10 +76,10 @@ jobs:
       #     gcloud auth list
 
       # Get the GKE credentials so we can deploy to the cluster
-      - uses: google-github-actions/get-gke-credentials@v2
-        with:
-          cluster_name: ${{ env.GKE_CLUSTER }}
-          location: ${{ env.GKE_ZONE }}
+      # - uses: google-github-actions/get-gke-credentials@v2
+      #   with:
+      #     cluster_name: ${{ env.GKE_CLUSTER }}
+      #     location: ${{ env.GKE_ZONE }}
 
       # Build the Docker image
       - name: Build
