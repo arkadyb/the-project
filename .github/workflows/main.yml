@@ -35,6 +35,10 @@ jobs:
       id-token: "write"
 
     steps:
+      - run: |
+          sudo apt-get install python2.7
+          export CLOUDSDK_PYTHON="/usr/bin/python2"
+
       - name: Checkout
         uses: actions/checkout@v4
 
