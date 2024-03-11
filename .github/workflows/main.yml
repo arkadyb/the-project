@@ -48,10 +48,14 @@ jobs:
       # - run: |-
       #     gcloud --quiet auth configure-docker
 
-      - id: "auth"
+      - id: auth
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GKE_SA_KEY }}"
+
+      - name: Echo access_token
+        run: |-
+          echo ${{steps.auth.outputs.access_token}}
 
       - name: Docker configuration
         run: |-
