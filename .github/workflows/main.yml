@@ -72,6 +72,9 @@ jobs:
         run: |-
           docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
 
+      - run: |-
+          kubectl version
+
       # # Set up kustomize
       # - name: Set up Kustomize
       #   run: |-
