@@ -44,6 +44,11 @@ jobs:
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v2"
+
+      - name: "Use gcloud CLI"
+        run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
       # # Configure Docker to use the gcloud command-line tool as a credential
       # # helper for authentication
       # - run: |-
