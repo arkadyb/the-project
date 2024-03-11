@@ -60,9 +60,16 @@ jobs:
       # - name: "Use gcloud CLI"
       #   run: "gcloud info"
 
-      - name: Docker configuration
-        run: |-
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
+      - name: Login to GAR
+        uses: docker/login-action@v3
+        with:
+          registry: us-central1-docker.pkg.dev
+          username: _json_key
+          password: ${{ secrets.GKE_SA_KEY }}
+
+      # - name: Docker configuration
+      #   run: |-
+      #     gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
 
       # - name: Service account
       #   run: |-
