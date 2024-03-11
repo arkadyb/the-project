@@ -55,7 +55,7 @@ jobs:
         # Configure Docker to use the gcloud command-line tool as a credential
         # helper for authentication
       - run: |-
-          gcloud --quiet auth configure-docker
+          gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
 
       - name: "Use gcloud CLI"
         run: "gcloud info"
