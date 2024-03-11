@@ -53,20 +53,18 @@ jobs:
       #   uses: "google-github-actions/setup-gcloud@v2"
       # - name: "Use gcloud CLI"
       #   run: "gcloud info"
-      - name: Login to GAR
-        uses: docker/login-action@v3
-        with:
-          registry: us-central1-docker.pkg.dev
-          username: _json_key
-          password: ${{ secrets.GCP_CREDENTIALS }}
 
+      # - name: Login to GAR
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: us-central1-docker.pkg.dev
+      #     username: _json_key
+      #     password: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
       - run: |-
-          gcloud config configurations list
-
-      # # Configure Docker to use the gcloud command-line tool as a credential
-      # # helper for authentication
-      # - run: |-
-      #     gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
+          gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
 
       # - name: Docker configuration
       #   run: |-
