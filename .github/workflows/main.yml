@@ -49,7 +49,7 @@ jobs:
       #     gcloud --quiet auth configure-docker
 
       # Alternative option - authentication via credentials json
-      - id: "auth"
+      - id: auth
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
