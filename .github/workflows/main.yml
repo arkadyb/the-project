@@ -65,7 +65,7 @@ jobs:
         with:
           registry: us-central1-docker.pkg.dev
           username: _json_key
-          password: ${{ secrets.GKE_SA_KEY }}
+          password: ${{ secrets.GCP_CREDENTIALS }}
 
       # - name: Docker configuration
       #   run: |-
