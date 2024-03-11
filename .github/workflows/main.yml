@@ -44,7 +44,7 @@ jobs:
       #     project_id: ${{ secrets.GKE_PROJECT }}
 
       # # Configure Docker to use the gcloud command-line tool as a credential
-      # # helper for authentication
+      # # helper for authenticationw
       # - run: |-
       #     gcloud --quiet auth configure-docker
 
@@ -53,6 +53,10 @@ jobs:
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: Service account
+        run: |-
+          gcloud auth list
 
       - name: Docker configuration
         run: |-
