@@ -58,6 +58,10 @@ jobs:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v2
 
+      - name: Install kubectl
+        run: |-
+          gcloud components install kubectl
+
       # # Configure Docker to use the gcloud command-line tool as a credential
       # # helper for authentication
       # - run: |-
