@@ -36,6 +36,7 @@ jobs:
 
     steps:
       - run: |
+          sudo apt-get update
           sudo apt-get install python2.7
           export CLOUDSDK_PYTHON="/usr/bin/python2"
 
