@@ -17,8 +17,8 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GAR_LOCATION: us-central1
-  GKE_CLUSTER: cluster-2 # Add your cluster name here.
-  GKE_ZONE: us-central1-c # Add your cluster zone here.
+  GKE_CLUSTER: autopilot-cluster-1 # Add your cluster name here.
+  GKE_ZONE: us-central1 # Add your cluster zone here.
   DEPLOYMENT_NAME: nginx-deployment # Add your deployment name here.
   REPOSITORY: samples
   IMAGE: static-site
@@ -36,18 +36,8 @@ jobs:
       id-token: "write"
 
     steps:
-      # - run: |
-      #     sudo apt-get update -y
-      #     sudo apt-get install -y python2.7
-      #     export CLOUDSDK_PYTHON="/usr/bin/python2"
-
       - name: Checkout
         uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ">=20"
-          check-latest: true
 
       # Alternative option - authentication via credentials json
       - id: auth
@@ -61,11 +51,6 @@ jobs:
       - name: Install kubectl
         run: |-
           gcloud components install kubectl
-
-      # # Configure Docker to use the gcloud command-line tool as a credential
-      # # helper for authentication
-      # - run: |-
-      #     gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
 
       - name: Docker configuration
         run: |-
@@ -96,14 +81,14 @@ jobs:
       # ./kustomize build . | kubectl apply -f -
 
       # Get the GKE credentials so we can deploy to the cluster
-      - uses: google-github-actions/get-gke-credentials@v2        
+      - uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
 
-      - id: 'get-pods'
-        run: 'kubectl get pods'
-      
+      - id: "get-pods"
+        run: "kubectl get pods"
+
         # - name: Deploy
         # run: |-
         #   echo $KUBECONFIG
