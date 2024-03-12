@@ -27,8 +27,8 @@ jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     # runs-on: ubuntu-latest
-    # runs-on: arc-runner-set
-    runs-on: self-hosted
+    runs-on: arc-runner-set
+    # runs-on: self-hosted
     environment: production
 
     permissions:
