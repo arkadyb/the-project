@@ -43,6 +43,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ">=20"
+          check-latest: true
+
       # Alternative option - authentication via credentials json
       - id: auth
         uses: "google-github-actions/auth@v2"
