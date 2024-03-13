@@ -1,12 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
 name: Build and Deploy to GKE
 
 on:
@@ -17,23 +8,17 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GAR_LOCATION: us-central1
-  GKE_CLUSTER: autopilot-cluster-1 # Add your cluster name here.
-  GKE_ZONE: us-central1 # Add your cluster zone here.
-  DEPLOYMENT_NAME: nginx-deployment # Add your deployment name here.
+  GKE_CLUSTER: autopilot-cluster-1
+  GKE_ZONE: us-central1
+  DEPLOYMENT_NAME: nginx-deployment
   REPOSITORY: samples
   IMAGE: static-site
 
 jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
-    # runs-on: ubuntu-latest
-    runs-on: arc-runner-set
-    # runs-on: self-hosted
+  build-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
     environment: production
-
-    permissions:
-      contents: "read"
-      id-token: "write"
 
     steps:
       - name: Checkout
@@ -47,10 +32,6 @@ jobs:
 
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v2
-
-      - name: Install kubectl
-        run: |-
-          gcloud components install kubectl
 
       - name: Docker configuration
         run: |-
@@ -69,6 +50,29 @@ jobs:
       - name: Publish
         run: |-
           docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
+
+  deploy:
+    name: Deploy
+    runs-on: arc-runner-set
+    environment: production
+
+    # permissions:
+    #   contents: "read"
+    #   id-token: "write"
+
+    steps:
+      # Alternative option - authentication via credentials json
+      - id: auth
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Install kubectl
+        run: |-
+          gcloud components install kubectl
 
       # # Set up kustomize
       # - name: Set up Kustomize
