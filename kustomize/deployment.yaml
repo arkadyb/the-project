@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.25.4-alpine
+        image: us-central1-docker.pkg.dev/the-project-415801/samples/static-site:latest
         ports:
         - containerPort: 80
