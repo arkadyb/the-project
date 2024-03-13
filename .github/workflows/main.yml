@@ -68,11 +68,15 @@ jobs:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
       # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@v2
+      # - uses: google-github-actions/setup-gcloud@v2
 
-      - name: Install kubectl
-        run: |-
-          gcloud components install kubectl
+      # - name: Install kubectl
+      #   run: |-
+      #     gcloud components install kubectl
+
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: "1.27"
 
       # # Set up kustomize
       # - name: Set up Kustomize
