@@ -58,7 +58,7 @@ jobs:
 
     # permissions:
     #   contents: "read"
-    #   id-token: "write"
+    #   id-token: "write"sadasda
 
     steps:
       # Alternative option - authentication via credentials json
