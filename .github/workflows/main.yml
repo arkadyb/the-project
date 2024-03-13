@@ -76,7 +76,7 @@ jobs:
 
       - uses: azure/setup-kubectl@v3
         with:
-          version: "1.27"
+          version: "latest"
 
       # # Set up kustomize
       # - name: Set up Kustomize
