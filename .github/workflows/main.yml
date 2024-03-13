@@ -15,46 +15,46 @@ env:
   IMAGE: static-site
 
 jobs:
-  build-publish:
-    name: Build and Publish
-    runs-on: ubuntu-latest
-    environment: production
+  # build-publish:
+  #   name: Build and Publish
+  #   runs-on: ubuntu-latest
+  #   environment: production
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      # Alternative option - authentication via credentials json
-      - id: auth
-        uses: "google-github-actions/auth@v2"
-        with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+  #     - id: auth
+  #       uses: "google-github-actions/auth@v2"
+  #       with:
+  #         credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
-      # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@v2
+  #     - uses: google-github-actions/setup-gcloud@v2
 
-      - name: Docker configuration
-        run: |-
-          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
+  #     - name: Docker configuration
+  #       run: |-
+  #         gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GAR_LOCATION-docker.pkg.dev
 
-      # Build the Docker image
-      - name: Build
-        run: |-
-          docker build \
-            --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
-            --build-arg GITHUB_SHA="$GITHUB_SHA" \
-            --build-arg GITHUB_REF="$GITHUB_REF" \
-            .
-
-      # Push the Docker image to Google Container Registry
-      - name: Publish
-        run: |-
-          docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
+  #     - name: Build
+  #       run: |-
+  #         docker build \
+  #           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
+  #           --build-arg GITHUB_SHA="$GITHUB_SHA" \
+  #           --build-arg GITHUB_REF="$GITHUB_REF" \
+  #           .
+  #     - name: Publish
+  #       run: |-
+  #         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
 
   deploy:
     name: Deploy
     runs-on: arc-runner-set
     environment: production
+
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
 
     # permissions:
     #   contents: "read"
