@@ -95,7 +95,7 @@ jobs:
           location: ${{ env.GKE_ZONE }}
 
       - id: "get-pods"
-        run: "kubectl get pods"
+        run: "kubectl config view"
 
         # - name: Deploy
         # run: |-
