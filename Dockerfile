@@ -1,4 +1,22 @@
-FROM nginx:1.25.4-alpine
+# build
 
-COPY .nginx/default.conf /etc/nginx/conf.d/
-COPY www/index.html /usr/share/nginx/html/
+FROM golang:1.22-alpine3.19 AS build
+
+RUN apk update
+RUN apk add make
+
+COPY . /build
+WORKDIR /build
+
+RUN make build
+
+# publish
+
+FROM alpine:3.19
+
+RUN apk add ca-certificates
+
+COPY --from=build /build/www www
+COPY --from=build /build/dist/app app
+
+CMD ["/app"]
