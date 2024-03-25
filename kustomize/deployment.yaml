@@ -18,4 +18,4 @@ spec:
       - name: nginx
         image: us-central1-docker.pkg.dev/the-project-415801/samples/static-site:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8080
